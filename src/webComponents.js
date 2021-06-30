@@ -11,7 +11,7 @@ document.getElementById('input-group').appendChild(templateClone);
 // Создание веб компонетов
 // создаем кастомный элемент task-card с shadow Dom
 // <task-card title="Купить хлеб" id="12" isopen="true"></task-card>
-customElements.define('task-card', class extends HTMLElement {
+customElements.define('task-item', class extends HTMLElement {
     connectedCallback() {
       const shadow = this.attachShadow({mode: 'open'});
   
@@ -93,5 +93,40 @@ customElements.define('task-card', class extends HTMLElement {
               store.dispatch(closeTask(event.target.dataset.idWorkedTask));
           }
       });
+    }
+  });
+
+
+// <task-list></task-list>
+  customElements.define('task-list', class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
+          <style>
+              .list-group {
+                display: flex;
+                flex-direction: column;
+                padding-left: 0;
+                margin-bottom: 0;
+                margin-top: 0;
+                box-sizing: border-box;
+              }
+          </style>
+          <ul class="list-group">
+          </ul>
+      `;
+    }
+  });
+
+//  <input-task></input-task>
+  customElements.define('input-task', class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button" id="button-add-task" data-action="createTask">Добавить задачу</button>
+            </div>
+                <input type="text" class="form-control" placeholder="" id="input">
+          </div>
+      `;
     }
   });

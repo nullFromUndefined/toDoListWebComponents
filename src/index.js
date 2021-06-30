@@ -5,7 +5,7 @@ import { changeTitleElement } from './helpers';
 import './styles.css';
 import './webComponents';
 
-const taskInWorked = document.getElementById('worked');
+const taskInWorked = document.querySelector('#worked ul');
 const closedTask = document.getElementById('closedTask');
 const openCloseTasksButton = document.getElementById('openCloseTasks');
 const input = document.getElementById('input');
@@ -21,9 +21,9 @@ store.subscribe(() => {
     taskInWorked.innerHTML = "";
     closedTask.innerHTML = "";
     valueState.openTasks.forEach((element) => {
-        if (element.open) render(taskInWorked, element.title, element.id, element.open);
+        if (element.open) renderTasks(taskInWorked, element.title, element.id, element.open);
         if (openCloseTasksButton.dataset.openBlock == "true") {
-            if (!element.open) render(closedTask, element.title, element.id, element.open);
+            if (!element.open) renderTasks(closedTask, element.title, element.id, element.open);
         }
     });
 })
@@ -44,8 +44,8 @@ document.getElementById('container').addEventListener('click', (event) => {
         taskInWorked.innerHTML = "";
         closedTask.innerHTML = "";
         valueState.openTasks.forEach((element) => {
-            if (element.open) render(taskInWorked, element.title, element.id, element.open);
-            if (!element.open) render(closedTask, element.title, element.id, element.open);
+            if (element.open) renderTasks(taskInWorked, element.title, element.id, element.open);
+            if (!element.open) renderTasks(closedTask, element.title, element.id, element.open);
         });
     }
     else if (event.target.dataset.openBlock === 'true') {
@@ -57,8 +57,8 @@ document.getElementById('container').addEventListener('click', (event) => {
     }
 })
 
-function render(parentElem, childElem, id, isOpen) {
-    const taskElem = document.createElement('task-card');
+function renderTasks(parentElem, childElem, id, isOpen) {
+    const taskElem = document.createElement('task-item');
     taskElem.setAttribute('title', childElem);
     taskElem.setAttribute('isopen', isOpen);
     taskElem.setAttribute('id', id);

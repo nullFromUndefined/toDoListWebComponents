@@ -17,12 +17,7 @@
   </h1>
 
   <template>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="button" id="button-add-task" data-action="createTask">Добавить задачу</button>
-      </div>
-      <input type="text" class="form-control" placeholder="" id="input">
-    </div>
+    <input-task></input-task>
   </template>
 
   <div id="input-group"></div>
@@ -32,8 +27,9 @@
     <!-- незакрытые дела -->
     <div class="card-body" style="width: 400px; margin: auto">
       <p>Мои дела на сегодня:</p>
-      <ul class="list-group" id="worked">
-      </ul>
+      <task-list id="worked"></task-list>
+      <!-- <ul class="list-group" id="worked">
+      </ul> -->
     </div>
 
     <!-- закрытые дела -->
