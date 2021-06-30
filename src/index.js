@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 import { rootReducer } from './redux/rootReducer';
 import { createTask } from './redux/action';
+import { changeTitleElement } from './helpers';
 import './styles.css';
 import './webComponents';
 
@@ -30,19 +31,14 @@ store.subscribe(() => {
 // инициализируем state
 store.dispatch({type: 'INIT_APPLICATION'});
 
-function render(parentElem, childElem, id, isOpen) {
-    const taskElem = document.createElement('task-card');
-    taskElem.setAttribute('title', childElem);
-    taskElem.setAttribute('isopen', isOpen);
-    taskElem.setAttribute('id', id);
-    parentElem.append(taskElem);
-}
-
 document.getElementById('container').addEventListener('click', (event) => {
     if (event.target.dataset.action === 'createTask') {
-        store.dispatch(createTask(input.value));
+        if (input.value.trim()) store.dispatch(createTask(input.value));
     }
     else if (event.target.dataset.openBlock === 'false') {
+        changeTitleElement(openCloseTasksButton, 
+            "Показать завершенные дела", 
+            "Скрыть завершенные задачи");
         event.target.dataset.openBlock = 'true';
         const valueState = store.getState();
         taskInWorked.innerHTML = "";
@@ -53,7 +49,18 @@ document.getElementById('container').addEventListener('click', (event) => {
         });
     }
     else if (event.target.dataset.openBlock === 'true') {
+        changeTitleElement(openCloseTasksButton, 
+            "Скрыть завершенные задачи", 
+            "Показать завершенные дела");
         event.target.dataset.openBlock = 'false';
         closedTask.innerHTML = "";
     }
 })
+
+function render(parentElem, childElem, id, isOpen) {
+    const taskElem = document.createElement('task-card');
+    taskElem.setAttribute('title', childElem);
+    taskElem.setAttribute('isopen', isOpen);
+    taskElem.setAttribute('id', id);
+    parentElem.append(taskElem);
+}
