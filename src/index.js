@@ -1,6 +1,5 @@
 import { createStore } from 'redux';
 import { rootReducer } from './redux/rootReducer';
-import { createTask } from './redux/action';
 import { changeTitleElement } from './helpers';
 import './styles.css';
 import './webComponents';
@@ -8,8 +7,6 @@ import './webComponents';
 const taskInWorked = document.querySelector('#worked ul');
 const closedTask = document.getElementById('closedTask');
 const openCloseTasksButton = document.getElementById('openCloseTasks');
-const input = document.getElementById('input');
-
 
 // создаем глобальный state
 export const store = createStore(rootReducer);
@@ -32,10 +29,7 @@ store.subscribe(() => {
 store.dispatch({type: 'INIT_APPLICATION'});
 
 document.getElementById('container').addEventListener('click', (event) => {
-    if (event.target.dataset.action === 'createTask') {
-        if (input.value.trim()) store.dispatch(createTask(input.value));
-    }
-    else if (event.target.dataset.openBlock === 'false') {
+    if (event.target.dataset.openBlock === 'false') {
         changeTitleElement(openCloseTasksButton, 
             "Показать завершенные дела", 
             "Скрыть завершенные задачи");

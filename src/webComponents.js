@@ -1,5 +1,5 @@
 import { store } from './index';
-import { deleteTask, closeTask } from './redux/action';
+import { deleteTask, closeTask, createTask } from './redux/action';
 
 // Создание веб компонетов
 // подключение элемнета в теге template
@@ -128,5 +128,11 @@ customElements.define('task-item', class extends HTMLElement {
                 <input type="text" class="form-control" placeholder="" id="input">
           </div>
       `;
+      this.addEventListener('click', (event) => {
+        const input = document.getElementById('input');
+        if (event.target.dataset.action === 'createTask') {
+            if (input.value.trim()) store.dispatch(createTask(input.value));
+        }
+    })
     }
   });
